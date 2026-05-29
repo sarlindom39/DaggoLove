@@ -596,7 +596,14 @@ std::string Filesystem::getFullCommonPath(CommonPath path)
 			rootpath = getFullCommonPath(COMMONPATH_USER_APPDATA);
 			break;
 		case COMMONPATH_APP_DOCUMENTS:
+			// On Android, use Documents/lovegame for game files
+#ifdef LOVE_ANDROID
 			rootpath = getFullCommonPath(COMMONPATH_USER_DOCUMENTS);
+			if (!rootpath.empty())
+				rootpath += "lovegame";
+#else
+			rootpath = getFullCommonPath(COMMONPATH_USER_DOCUMENTS);
+#endif
 			break;
 		default:
 			break;
@@ -699,7 +706,7 @@ std::string Filesystem::getFullCommonPath(CommonPath path)
 		// No such thing on Android?
 		break;
 	case COMMONPATH_USER_DOCUMENTS:
-		// TODO: something more idiomatic / useful?
+		// Android: use Documents folder as base for game files
 		fullPaths[path] = normalize(storagepath + "/Documents/");
 		break;
 	case COMMONPATH_MAX_ENUM:
