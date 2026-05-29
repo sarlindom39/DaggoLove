@@ -204,8 +204,13 @@ bool createStorageDirectories()
 	if (!tryCreateDirectory(saveDirectoryExternal.c_str()))
 		return false;
 
-	std::string game_directory = externalStoragePath + "/game";
-	if (!tryCreateDirectory (game_directory.c_str()))
+	// Create Documents and lovegame directories in external storage for easier access by file editors
+	std::string documentsPath = externalStoragePath + "/Documents";
+	if (!tryCreateDirectory(documentsPath.c_str()))
+		return false;
+
+	std::string loveGameDirectory = documentsPath + "/lovegame";
+	if (!tryCreateDirectory(loveGameDirectory.c_str()))
 		return false;
 
 	return true;
